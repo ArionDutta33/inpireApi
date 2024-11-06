@@ -50,11 +50,21 @@ router.post(
     const token = jwt.sign({ id: isUser._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
+    const newUser = await User.findOne({ email }).select("-password");
     return res.status(200).json({
       message: "Login successful",
       token,
+      user: newUser,
     });
   })
 );
 
+router.get(
+  "/user/:id",
+  asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id).select("-password");
+    res.status(200).json(user);
+  })
+);
 module.exports = router;
