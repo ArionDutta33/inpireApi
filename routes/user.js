@@ -18,7 +18,7 @@ router.post(
       return res.status(400).json({ message: "User already exists" });
     }
      const defaultProfilePic = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcZsL6PVn0SNiabAKz7js0QknS2ilJam19QQ&s';
-    const finalProfilePic = req._destroy || defaultProfilePic;
+    const finalProfilePic = req.body.profilePic || defaultProfilePic;
     const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(password, salt);
 
