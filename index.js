@@ -12,12 +12,12 @@ app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1", blogRoutes);
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/inspireSphereDB")
+  .connect("mongodb+srv://lunaticdev23:ZtHhDytlhxM0TFYK@cluster0.brj01.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => {
     console.log("database connected");
   })
   .catch((err) => {
-    console.log(err.response.data);
+    console.log(err);
   });
 
 const port = 3000;

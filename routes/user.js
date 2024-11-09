@@ -9,7 +9,7 @@ const router = express.Router();
 router.post(
   "/register",
   asyncHandler(async (req, res) => {
-    const { fullname, email, password } = req.body;
+    const { fullname, email, password ,profilePic} = req.body;
     if (!fullname || !email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -17,6 +17,8 @@ router.post(
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
+     const defaultProfilePic = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcZsL6PVn0SNiabAKz7js0QknS2ilJam19QQ&s';
+    const finalProfilePic = req._destroy || defaultProfilePic;
     const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -24,8 +26,7 @@ router.post(
       fullname,
       email,
       password: hashedPassword,
-      profilePic:
-        "https://images.pexels.com/photos/8322968/pexels-photo-8322968.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2",
+      profilePic: finalProfilePic,
     });
     await newUser.save();
     res.status(201).json({ message: "User created" });
