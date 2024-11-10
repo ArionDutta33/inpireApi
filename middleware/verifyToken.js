@@ -5,7 +5,7 @@ module.exports.verifyToken=async(req,res,next)=>{
         return res.status(401).send("Access Denied")
     }
     try{
-        const decoded=jwt.verify('secret')
+        const decoded=jwt.verify(token,process.env.JWT_SECRET)
         console.log(decoded)
         req.user=decoded
         next()

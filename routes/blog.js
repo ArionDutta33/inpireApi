@@ -15,25 +15,25 @@ router.get(
 );
 
 router.post("/blogs",verifyToken, async (req, res) => {
-  // try {
-  //   const { title, body } = req.body;
-  //   if (!title || !body) {
-  //     return res.status(401).json({ message: "All fields are required" });
-  //   }
-
-  //   const newBlog = new Blog({
-  //     title,
-  //     body,
-  //     category: "Health & Wellness",
-  //     // image,
-  //     user_id: "672488d6aec5b0634bb334e8",
-  //   });
-  //   await newBlog.save();
-  //   res.status(200).json({ newBlog });
-  // } catch (error) {
-  //   console.log(error);
-  // }
-  res.send("hello world");
-});
+  try {
+    const { title, body } = req.body;
+    if (!title || !body) {
+      return res.status(401).json({ message: "All fields are required" });
+    }
+const{image}=req.body
+    const newBlog = new Blog({
+      title,
+      body,
+      category: "Health & Wellness",
+      image,
+      user_id: "672488d6aec5b0634bb334e8",
+    });
+    await newBlog.save();
+    res.status(200).json({ newBlog });
+  } catch (error) {
+    console.log(error);
+  }
+  res.send("Hello")
+ });
 
 module.exports = router;

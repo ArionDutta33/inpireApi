@@ -48,8 +48,8 @@ router.post(
     if (!passwordMatch) {
       return res.status(401).json({ message: "Incorrect credentials" });
     }
-    const token = jwt.sign({ id: isUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
+    const token = jwt.sign({ id: isUser._id,name:isUser.fullname }, process.env.JWT_SECRET, {
+      expiresIn: "7d", 
     });
     const newUser = await User.findOne({ email }).select("-password");
     return res.status(200).json({
